@@ -1,0 +1,5 @@
+Arduino based Current Sensor
+
+This project includes the Arduino sketch and a basic Python script to read data from the Arduino.
+
+Read more about the project here: http://trafficlightads.net/2011/09/06/an-arduino-current-sensor/
