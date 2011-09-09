@@ -19,14 +19,14 @@ void loop(){
 int maxVoltage() {
   int MaxADC = 0;
   
-  for (int x = 0; x < 25; x++) {
+  for (int x = 0; x < 300; x++) {
     int RawADC = analogRead(AnalogInputPin) + calibration;
     
     if (RawADC > MaxADC) {
       MaxADC = RawADC;
     }
     
-    delay(5); 
+    delay(2); 
   }
   
   return MaxADC;
@@ -68,8 +68,20 @@ void currentSensor(int RawADC) {
   long   InternalVcc    = readInternalVcc();
   double ZeroCurrentVcc = InternalVcc / 2;
   double SensedVoltage  = (RawADC * InternalVcc) / 1024;
-  double Difference     = SensedVoltage - ZeroCurrentVcc;
-  double SensedCurrent  = Difference / Sensitivity;
-  printDouble(SensedCurrent, 3);
+  double Difference     = SensedVoltage - ZeroCurrentVcc;  // actual voltage in millivolts
+  double SensedCurrent  = Difference / Sensitivity; // actual current in amps
+  double RMS = ((Difference * 0.7)/1000)*2;
+  //Serial.print("Sensed current (A): ");
+  //printDouble(SensedCurrent, 3);
+  //Serial.print(" || InternalVCC (mV): ");
+  //printDouble(InternalVcc, 3);
+  //Serial.print(" || ZeroCurrentVCC (mV): ");
+  //printDouble(ZeroCurrentVcc, 3);
+  //Serial.print(" || Sensed Voltage (mV): ");
+  //printDouble(SensedVoltage, 3);
+  //Serial.print(" || Difference (mV): ");
+  //printDouble(Difference, 3);  
+  //Serial.print(" || RMS (A): ");
+  printDouble(RMS, 3);  
   //return SensedCurrent;                                        // Return the Current
 }
